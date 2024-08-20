@@ -217,6 +217,7 @@ const Onboarding = () => {
 
             :
             <Button  onClick={()=>{
+                
                 setbuttonclicked(true)
                 if (!(imgerror || nameerror || birthdayerror)) {
                     setfullføridloading(true)
