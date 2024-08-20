@@ -8,6 +8,7 @@ import {
 import { ClipLoader } from 'react-spinners'
 import {getDagenstall, getUser} from '../firebase/firebaseUtils'
 import { GlobalContext } from './GlobalLayout'
+import { NavLink } from 'react-router-dom'
 const Landing = () => {
     const globalcontext = useContext(GlobalContext)
 
@@ -77,7 +78,7 @@ const Landing = () => {
                 />
                 :
                 
-                <p className=' cursor-pointer underline text-gray-500 mt-10'>Jeg har ikke kode</p>
+                <NavLink to={'/contact'} className=' cursor-pointer underline text-gray-500 mt-10'>Jeg har ikke kode</NavLink>
 
             }
             

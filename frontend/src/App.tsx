@@ -9,6 +9,7 @@ import Onboarding from './pages/Onboarding'
 import GlobalLayout from './pages/GlobalLayout'
 
 import './global.css'
+import Contact from './pages/Contact'
 function App() {
   
   return (
@@ -22,6 +23,8 @@ function App() {
           <Route path='f' element={ <Førerkort interactive data={undefined} />}/>
           <Route path='k' element={ <Kontroll />}/>
           <Route path='onboarding' element={ <Onboarding  />}/>
+          <Route path='contact' element={ <Contact  />}/>
+          <Route path="*" element={<Landing />} />
         </Route>
       </Routes>
     </BrowserRouter>
