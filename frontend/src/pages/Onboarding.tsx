@@ -26,6 +26,7 @@ import { Input } from '../../@/components/ui/input';
 import { ClipLoader } from 'react-spinners'
 import { Label } from "../../@/components/ui/label"
 import { addDataUser, deleteImages, uploadImage } from '../firebase/firebaseUtils';
+import { AnimatePresence, motion } from 'framer-motion';
 const Onboarding = () => {
     const [img, setImg] = useState<string>('')
     const [imgevent, setImgevent] = useState<ChangeEvent<HTMLInputElement> | undefined>(undefined)
@@ -149,6 +150,7 @@ const Onboarding = () => {
     useEffect(()=>{console.log(submitDataError)},[submitDataError])
     useEffect(()=>{console.log(img)},[img])
 
+    const [dialogstate, setdialogstate] = useState(0)
     return (
     <div className=' w-[80%] flex ml-[10%] h-[calc(100vh-74px)] flex-col items-center gap-6 pt-12 '>
         <h1 className=' text-xl mt-10 mb-6'>Fyll inn data til din ID</h1>
@@ -198,20 +200,72 @@ const Onboarding = () => {
                 <AlertDialogTrigger><div className=' px-8 p-2.5 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-5 bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80'>Godkjenn vilkår og fullfør ID</div></AlertDialogTrigger>
                 <AlertDialogContent aria-describedby={'demo of id'}>
                     <AlertDialogHeader>
-                        <AlertDialogTitle >Les nøye din ape:</AlertDialogTitle>
+                        <AlertDialogTitle >Vilkår</AlertDialogTitle>
                         <div className=' mt-1'></div>
-                    <AlertDialogDescription >
-                        1. Jeg skal ikke bruke misbruke tjenesten.
-                        <br/>
-                        2. Jeg skal ikke spre tjenesten til personer uten interresse.
-                    </AlertDialogDescription>
                     </AlertDialogHeader>
-                    <div className=' mb-1'></div>
-
-                    <AlertDialogFooter>
-                        <AlertDialogCancel onClick={()=>setdisplayterms(false)}>Avbryt</AlertDialogCancel>
-                        <AlertDialogAction onClick={()=>submitData()}>Godkjenn og fullfør</AlertDialogAction>
-                    </AlertDialogFooter>
+                    <AnimatePresence>
+                    {   
+                        dialogstate === 0&&
+                        <motion.div 
+                            exit={{ x:600 }}
+                            transition={{duration:0.1, type:'tween'}}
+                        >
+                            <AlertDialogDescription className='  mb-8 text-center' >
+                               Jeg forstår at tjenesten skal brukes til å la meg se hvordan forskjellige bilder ville sett ut på mitt førerkort.
+                            </AlertDialogDescription>
+                            <div className=' mb-1'></div>
+                            <AlertDialogFooter>
+                                <Button variant={'outline'} onClick={()=>{
+                                    setdialogstate(0)
+                                    setdisplayterms(false)
+                                }}>Avbryt</Button>
+                                <Button className=' mb-2' variant={'default'} onClick={()=>setdialogstate(1)}>Fortsett</Button>
+                            </AlertDialogFooter>
+                        </motion.div>
+                    }
+                    {   
+                        dialogstate === 1&&
+                        <motion.div 
+                            initial={{ x: -300 }}
+                            animate={{ x: 0 }}
+                            exit={{ x:600 }}
+                            transition={{duration:0.1, type:'tween'}}
+                        >
+                            <AlertDialogDescription className='  mb-8 text-center' >
+                                Jeg forstår at tjenesten ikke skal misbrukes.
+                            </AlertDialogDescription>
+                            <div className=' mb-1'></div>
+                            <AlertDialogFooter>
+                                <Button variant={'outline'} onClick={()=>{
+                                    setdialogstate(prev=>prev -= 1)
+                                }}>Tilbake</Button>
+                                <Button className=' mb-2' variant={'default'} onClick={()=>setdialogstate(2)}>Fortsett</Button>
+                            </AlertDialogFooter>
+                        </motion.div>
+                    }
+                    {   
+                        dialogstate === 2&&
+                        <motion.div 
+                            initial={{ x: -300 }}
+                            animate={{ x: 0 }}
+                            exit={{ x:600 }}
+                            transition={{duration:0.1, type:'tween'}}
+                        >
+                            <AlertDialogDescription className='  mb-8 text-center' >
+                                Jeg forstår at ved brudd på regler kan min konto bli sperret.
+                            </AlertDialogDescription>
+                            <div className=' mb-1'></div>
+                            <AlertDialogFooter>
+                                <AlertDialogCancel onClick={()=>{
+                                    setdialogstate(0)
+                                    setdisplayterms(false)
+                                }}>Avbryt</AlertDialogCancel>
+                                <AlertDialogAction onClick={()=>submitData()}>Godkjenn og fullfør</AlertDialogAction>
+                            </AlertDialogFooter>
+                        </motion.div>
+                    }
+                        
+                    </AnimatePresence>
                 </AlertDialogContent>
             </AlertDialog>
 
