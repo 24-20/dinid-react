@@ -152,8 +152,8 @@ const Onboarding = () => {
 
     const [dialogstate, setdialogstate] = useState(0)
     return (
-    <div className=' w-[80%] flex ml-[10%] h-[calc(100vh-74px)] flex-col items-center gap-6 pt-12 '>
-        <h1 className=' text-xl mt-10 mb-6'>Fyll inn data til din ID</h1>
+    <div className=' w-[80%] flex ml-[10%] min-h-[calc(100vh-74px)] h-fit overflow-y-scroll flex-col items-center gap-5 pt-12 '>
+        <h1 className=' text-xl mt-6 mb-6 '>Fyll inn data til din ID</h1>
         
         <div className="grid w-full max-w-sm items-center gap-1.5">
             <Label htmlFor="image">Førerkort bilde</Label>
@@ -194,6 +194,8 @@ const Onboarding = () => {
             }
             
         </div>
+        <p className=' text-gray-500 text-sm font-bold text-center'>Du kan ikke endre din data etter ID er opprettet</p>
+        
         {
             displayterms?
             <AlertDialog>
@@ -211,7 +213,7 @@ const Onboarding = () => {
                             transition={{duration:0.1, type:'tween'}}
                         >
                             <AlertDialogDescription className='  mb-8 text-center' >
-                               Jeg forstår at tjenesten skal brukes til å la meg se hvordan forskjellige bilder ville sett ut på mitt førerkort.
+                               Jeg forstår at tjenesten skal brukes til å la meg se hvordan forskjellige bilder, navn osv... ville sett ut på mitt førerkort.
                             </AlertDialogDescription>
                             <div className=' mb-1'></div>
                             <AlertDialogFooter>
@@ -279,7 +281,7 @@ const Onboarding = () => {
             }}>{!fullføridloading?'Gå videre':<ClipLoader size={22} color='white' className=' mx-6'/>}</Button>
         }
         <Drawer>
-            <DrawerTrigger className=' w-full h-fit mt-16'><div className=' px-8 p-2.5 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-5 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground'>Forhåndsvis ID</div></DrawerTrigger>
+            <DrawerTrigger className=' w-full h-fit mt-10'><div className=' px-8 p-2.5 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-5 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground'>Forhåndsvis ID</div></DrawerTrigger>
             <DrawerContent className=' h-fit'>
                 <div className=' relative w-screen h-[500px]'>
                 <Førerkort interactive={false} data={{name,birthday,img}} />

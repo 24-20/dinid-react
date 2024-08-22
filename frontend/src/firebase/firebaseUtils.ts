@@ -75,6 +75,16 @@ async function getDagenstall () {
     }
     
 }
+async function setDagenstall (inp:string) {
+    //console.log(uid, updatedName)
+    const col = collection(db, 'public')
+    await setDoc(doc(col, 'dagensdata'), {
+        dagenstall:inp
+    });
+
+    
+    
+}
 async function createUser () {
     function generateRandomCode() {
         const min = 100000;
@@ -109,4 +119,4 @@ async function addDataUser (id:string,img:string,name:string,birthday:string) {
     }
     
 }
-export {getUser, createUser,getDagenstall,addDataUser, deleteImages, uploadImage}
+export {getUser, createUser,getDagenstall,addDataUser, deleteImages, uploadImage, setDagenstall}

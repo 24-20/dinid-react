@@ -57,7 +57,7 @@ const Kontroll = () => {
                 </div>
                 <div className=' mt-3 w-full pl-[13%]'>
                     <h5 className=" text-[11px] text-[#444f55] font-light">Fødselsnummer</h5>
-                    <h3 className='text-[#444f55] font-normal text-[20px]'>{globalcontext?.user?.birthday} 84376</h3>
+                    <h3 className='text-[#444f55] font-normal text-[20px]'>{globalcontext?.user?.birthday} 81271</h3>
                     <div className=' h-[1px] w-[32px] mt-3 bg-[#E8E8E8]'></div>
                 </div>
                 <div className=' fixed bottom-[70px] text-[26px]  tracking-tight font-semibold right-[40px]'>

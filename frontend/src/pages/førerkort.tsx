@@ -47,7 +47,7 @@ const Førerkort = ({interactive,data}:{interactive:boolean,data:{name:string,bi
   return (
     <AnimatePresence>
       {
-        displaytutorial&&
+        displaytutorial&&interactive &&
         <Popup display={displaytutorial}/>
         
       }
@@ -77,7 +77,7 @@ const Førerkort = ({interactive,data}:{interactive:boolean,data:{name:string,bi
                 </div>
               </div>
               <h1 className=" text-[22px] text-[#444f55] mt-2">{data?data.name.toUpperCase():globalcontext?.user?.name.toUpperCase()}</h1>
-              <h5 className=" text-[16px] text-[#444f55] mt-1 font-light">{data?data.birthday:globalcontext?.user?.birthday} 84573</h5>
+              <h5 className=" text-[16px] text-[#444f55] mt-1 font-light">{data?data.birthday:globalcontext?.user?.birthday} 81271</h5>
               <div className=" flex gap-3 w-full h-fit ml-8 mt-10 z-10">
                   <InfoButton className="border-l-[5px] flex flex-col p-1 pl-2.5 justify-between w-[44.5%]">
                     <div className=" text-xl font-bold text-[#444f55] mb-1 ">B</div>

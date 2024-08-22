@@ -40,7 +40,7 @@ const Popup = (props:{display:boolean}) => {
                 initial={{opacity:0, scale:0.8 }}
                 animate={{opacity:1, scale:1 }}
 
-                className=' bg-white w-screen h-screen max-w-[500px] max-h-[500px] flex flex-col items-center text-center px-8 relative py-4  ' onClick={()=>setfgclick(true)}>
+                className=' bg-white w-screen h-screen rounded-lg max-w-[500px] max-h-[500px] flex flex-col items-center text-center px-8 relative py-4  ' onClick={()=>setfgclick(true)}>
 
             
                 
@@ -55,14 +55,15 @@ const Popup = (props:{display:boolean}) => {
                         setbgclick(false)
                         setDisplay(false)
                         }}/>
-                        <h1 className='text-lg font-semibold'>Viktig!</h1>
-                        <p className=' text-gray-500 mb-5'>Skjul adressebaren</p>
+                        <h1 className='text-lg font-bold'>Tips ved bruk av tjenesten</h1>
+                        <p className=' text-gray-500 mb-5'>Skjul adressebaren før bruk</p>
                         <div className=' flex gap-4 p-1 border-grey-500 border relative h-fit'>
-                            <img className=' h-[310px] border-grey-500 border-r ' src={ikke_sjult} alt="" />
+                            <img className=' h-[280px] border-grey-500 border-r ' src={ikke_sjult} alt="" />
                             <ArrowRight size={40} className=' h-full'/>
-                            <img className=' h-[310px] border-grey-500 border-l ' src={sjult} alt="" />
+                            <img className=' h-[280px] border-grey-500 border-l ' src={sjult} alt="" />
                         </div>
-                        <div className=' mt-5 w-screnn flex gap-8'>
+                        <p className=' text-gray-500 my-2 '>Trykk på det systemet du har for tutorial om hvordan man skjuler adressebaren</p>
+                        <div className=' mt-2 w-screnn flex gap-8'>
                             <Button variant={'outline'} onClick={()=>setpopupstate('Android')}>Android</Button>
                             <Button variant={'default'} onClick={()=>setpopupstate('IOS')}>IOS</Button>
                         </div>
@@ -72,12 +73,12 @@ const Popup = (props:{display:boolean}) => {
                     popupstate === 'IOS' &&
                     <>  
                         <ArrowLeft size={18} className=" absolute top-6 left-6 cursor-pointer text-gray-500" onClick={()=>setpopupstate(undefined)}/>
-                        <h1 className='text-lg font-semibold'>Skjul adressebar IOS</h1>
+                        <h1 className='text-lg font-bold'>Skjul adressebar IOS</h1>
                         <p className=' text-gray-500 mb-5'>Klikk på "aA" deretter "Skjul verktøylinje"</p>
                         <div className=' flex gap-4 p-1 border-grey-500 border relative h-fit'>
-                            <img className=' h-[310px] border-grey-500 border-r ' src={ikke_sjult} alt="" />
+                            <img className=' h-[280px] border-grey-500 border-r ' src={ikke_sjult} alt="" />
                             <ArrowRight size={40} className=' h-full'/>
-                            <img className=' h-[310px] border-grey-500 border-l ' src={verktøy} alt="" />
+                            <img className=' h-[280px] border-grey-500 border-l ' src={verktøy} alt="" />
                         </div>
                         <div className=' mt-5 w-screnn flex gap-8'>
                             <Button variant={'outline'} onClick={()=>{
@@ -91,8 +92,8 @@ const Popup = (props:{display:boolean}) => {
                     popupstate === 'Android' &&
                     <>  
                         <ArrowLeft size={18} className=" absolute top-6 left-6 cursor-pointer text-gray-500" onClick={()=>setpopupstate(undefined)}/>
-                        <h1 className='text-lg font-semibold'>Skjul adressebar Android</h1>
-                        <p className=' text-gray-500 mb-5'>finn ut selv...</p>
+                        <h1 className='text-lg font-bold'>Skjul adressebar Android</h1>
+                        <p className=' text-gray-500 mb-5'>Skaff deg en ordentlig telefon...</p>
                         
                     </>
                 }
