@@ -12,6 +12,7 @@ const GlobalLayout = () => {
       navigate('/onboarding')
     }
     if (user?.name) {
+      sessionStorage.setItem('id',user.id)
       navigate("/f")
     }
   },[user])

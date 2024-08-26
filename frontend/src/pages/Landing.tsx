@@ -9,6 +9,8 @@ import { ClipLoader } from 'react-spinners'
 import {getDagenstall, getUser} from '../firebase/firebaseUtils'
 import { GlobalContext } from './GlobalLayout'
 import { NavLink } from 'react-router-dom'
+
+
 const Landing = () => {
     const globalcontext = useContext(GlobalContext)
 
@@ -24,6 +26,7 @@ const Landing = () => {
             setValauthenting(true)
         }
     },[val])
+
     useEffect(()=>{
         async function getdata() {
             if (!globalcontext) return 
@@ -34,9 +37,12 @@ const Landing = () => {
             if (userobj?.error) {
                 setValauthenting(false)
                 seterror(userobj.error)
+                sessionStorage.removeItem('id')
             } else {
+                sessionStorage.setItem('id',val)
                 globalcontext.setUser({...userobj.data,id:val,dagenstall:dagensdata.data.dagenstall})
                 setValauthenting(false)
+
 
             }
             
@@ -45,12 +51,22 @@ const Landing = () => {
             getdata()
         }
     },[valauthenting])
-
+    useEffect(()=>{
+        if (sessionStorage.getItem('id')) {
+            setval(sessionStorage.getItem('id') as string)
+        }
+    },[])
+    useEffect(()=>{
+        document.getElementById("otpinput")?.focus();
+    },[])
     return (
         <div className=' w-screen h-[calc(100vh-74px)] flex flex-col items-center justify-center gap-3'>
-            <h1 className=' text-lg'>Logg inn med din kode</h1>
-            <InputOTP maxLength={6} onChange={(e)=>{setval(e)}} value={valauthenting?staticVal:val}>
-                <InputOTPGroup>
+            <div className="flex flex-col items-center text-2xl mb-12 font-regular text-[#444f55] ">
+                <h1 className=' '>Tast inn din </h1>
+                <h1 className=' '>personlige kode</h1>
+            </div>
+            <InputOTP id='otpinput' maxLength={6} onChange={(e)=>{setval(e)}} value={valauthenting?staticVal:val}>
+                <InputOTPGroup >
                     <InputOTPSlot index={0} />
                     <InputOTPSlot index={1} />
                     <InputOTPSlot index={2} />
@@ -78,7 +94,7 @@ const Landing = () => {
                 />
                 :
                 
-                <NavLink to={'/contact'} className=' cursor-pointer underline text-gray-500 mt-10'>Jeg har ikke kode</NavLink>
+                <NavLink to={'/contact'} className=' cursor-pointer underline text-[#444f55] mt-0'>Jeg har ikke kode</NavLink>
 
             }
             

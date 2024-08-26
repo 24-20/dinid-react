@@ -116,6 +116,7 @@ const Onboarding = () => {
     async function submitData() {
         if (!globalcontext?.user?.id) {
             setsubmitDataError(true)
+            alert(`error submitting: ${submitDataError}`)
             return
         }
         await deleteImages(globalcontext.user.id)
@@ -128,6 +129,7 @@ const Onboarding = () => {
         const res = await addDataUser(globalcontext.user.id,imgURL?.imgURL as string,name,birthday)
         if (res?.error) {
             setsubmitDataError(true)
+            alert(`error submitting: ${submitDataError}`)
             return
         }
         globalcontext?.setUser(undefined)
@@ -147,8 +149,6 @@ const Onboarding = () => {
 
 
 
-    useEffect(()=>{console.log(submitDataError)},[submitDataError])
-    useEffect(()=>{console.log(img)},[img])
 
     const [dialogstate, setdialogstate] = useState(0)
     return (

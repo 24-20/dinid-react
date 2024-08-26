@@ -12,7 +12,7 @@ import { GlobalContext } from './GlobalLayout';
 import { useContext, useEffect, useState } from 'react';
 import {AnimatePresence, motion} from 'framer-motion'
 import Popup from '../components/Popup';
-const Førerkort = ({interactive,data}:{interactive:boolean,data:{name:string,birthday:string,img:string}|undefined}) => {
+const Førerkort = ({interactive,data}:{interactive:boolean,data:{name:string|undefined,birthday:string|undefined,img:string|undefined}|undefined}) => {
   const navigate = useNavigate()
   const [displaytutorial, setdisplaytutorial] = useState(false)
   const globalcontext = useContext(GlobalContext)
@@ -76,7 +76,7 @@ const Førerkort = ({interactive,data}:{interactive:boolean,data:{name:string,bi
                   <Maximize2 size={18} className=" text-[#444f55]"/>
                 </div>
               </div>
-              <h1 className=" text-[22px] text-[#444f55] mt-2">{data?data.name.toUpperCase():globalcontext?.user?.name.toUpperCase()}</h1>
+              <h1 className=" text-[22px] text-[#444f55] mt-2">{data?data?.name?.toUpperCase():globalcontext?.user?.name.toUpperCase()}</h1>
               <h5 className=" text-[16px] text-[#444f55] mt-1 font-light">{data?data.birthday:globalcontext?.user?.birthday} 81271</h5>
               <div className=" flex gap-3 w-full h-fit ml-8 mt-10 z-10">
                   <InfoButton className="border-l-[5px] flex flex-col p-1 pl-2.5 justify-between w-[44.5%]">

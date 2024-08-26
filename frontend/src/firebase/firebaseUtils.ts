@@ -1,10 +1,10 @@
 
-import { collection, doc, getDoc, setDoc } from "firebase/firestore";
+import { collection, deleteDoc, doc, getDoc, getDocs, setDoc, updateDoc } from "firebase/firestore";
 import {db, imgdb} from './firebaseConfig'
 import { getStorage, ref, deleteObject, listAll, uploadBytes, getDownloadURL } from "firebase/storage";
 import { ChangeEvent } from "react";
 import { nanoid } from 'nanoid';
-
+import { UserType } from "../types/User";
 async function deleteImages(folder:string) {
 
     const storage = getStorage();
@@ -14,10 +14,6 @@ async function deleteImages(folder:string) {
     // Find all the prefixes and items.
     listAll(listRef)
     .then((res) => {
-        res.prefixes.forEach((folderRef) => {
-        console.log(folderRef)
-        });
-
         res.items.forEach((itemRef) => {
             deleteObject(itemRef).then(() => {
                     console.log('success')
@@ -51,7 +47,7 @@ async function uploadImage(folder:string | undefined,e:ChangeEvent<HTMLInputElem
 
 async function getUser (id:string) {
     //console.log(uid, updatedName)
-    const docRef = doc(db, 'Users',id)
+    const docRef = doc(db, 'Users',id.toString())
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
@@ -85,7 +81,7 @@ async function setDagenstall (inp:string) {
     
     
 }
-async function createUser () {
+async function createUser (slug:string,inp:string) {
     function generateRandomCode() {
         const min = 100000;
         const max = 999999;
@@ -97,7 +93,10 @@ async function createUser () {
     const userref = collection(db, "Users");
 
     await setDoc(doc(userref, randomCode.toString()), {
-        active:true
+        slug,
+        plug:inp,
+        status:'pending',
+        id:randomCode.toString()
     });
     return randomCode.toString()
     
@@ -106,9 +105,11 @@ async function addDataUser (id:string,img:string,name:string,birthday:string) {
     
 
     const userref = collection(db, "Users");
-
+    const prevdataraw = await getUser(id)
+    const prevdata = prevdataraw?.data
     try {
-        await setDoc(doc(userref, id), {
+        await updateDoc(doc(userref, id), {
+            ...prevdata,
             img,
             name,
             birthday
@@ -119,4 +120,45 @@ async function addDataUser (id:string,img:string,name:string,birthday:string) {
     }
     
 }
-export {getUser, createUser,getDagenstall,addDataUser, deleteImages, uploadImage, setDagenstall}
+async function updateDataUser (id:string,name:string | undefined,birthday:string | undefined) {
+    
+
+    const userref = collection(db, "Users");
+    const prevdataraw = await getUser(id)
+    const prevdata = prevdataraw?.data
+    const newname = name?name:prevdata?.name
+    const newbirthday = birthday?birthday:prevdata?.birthday
+    try {
+        await updateDoc(doc(userref, id), {
+            ...prevdata,
+            name:newname,
+            birthday:newbirthday
+        });
+        return {}
+    } catch (error) {
+        return {error}
+    }
+    
+}
+async function getUsers () {
+    
+
+    
+    const usersref = collection(db, 'Users')
+    const users = await getDocs(usersref)
+    const res = [] as UserType[]
+
+    users.forEach((element) => {
+        res.push(element.data() as UserType)
+    });
+    return res as UserType[]
+    
+}
+async function deleteUser (id:string) {
+    const usersref = doc(db, 'Users',id.toString())
+    await deleteDoc(usersref)
+
+    
+}
+
+export {getUser, createUser,getDagenstall,addDataUser, deleteImages, uploadImage, setDagenstall, getUsers, deleteUser, updateDataUser}
