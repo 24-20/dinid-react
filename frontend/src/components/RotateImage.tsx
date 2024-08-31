@@ -6,7 +6,7 @@ const RotatingImage = ({left}:{left:boolean}) => {
     return (
         <motion.div
             
-            className={`${left?'left-[-250px]':'right-[-300px]'} -z-10 fixed  top-[150px] h-[550px] w-auto`} // Tailwind CSS classes for sizing (optional)
+            className={`${left?'left-[-250px]':'right-[-250px]'} -z-10 fixed  top-[150px] h-[550px] w-auto`} // Tailwind CSS classes for sizing (optional)
             animate={{ rotate: 360 }} // Rotate the image 360 degrees
             transition={{
                 repeat: Infinity, // Repeat the animation infinitely

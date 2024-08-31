@@ -1,5 +1,6 @@
 import { Outlet,useNavigate } from 'react-router-dom'
 import { createContext, useEffect, useState } from 'react'
+import { AnimatePresence } from 'framer-motion'
 const GlobalContext = createContext<{user:{name:string, birthday:string,img:string,dagenstall:string,id:string}| undefined,setUser:Function}|undefined>(undefined)
 
 const GlobalLayout = () => {
@@ -20,7 +21,9 @@ const GlobalLayout = () => {
   return (
     <div className=' w-screen h-fit overflow-hidden hide-scrollbar  '>
         <GlobalContext.Provider value={{user, setUser}}>
-          <Outlet />
+          <AnimatePresence>
+            <Outlet />
+          </AnimatePresence>
         </GlobalContext.Provider>
     </div>
   )

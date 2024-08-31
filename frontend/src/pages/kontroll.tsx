@@ -1,13 +1,14 @@
 
-import { useContext, useEffect } from 'react'
-import {AnimatePresence, motion} from 'framer-motion'
+import { useContext, useEffect, useState } from 'react'
+import {motion} from 'framer-motion'
 import Navbar from '../components/Navbar'
 import qr from  '../public/qrcode.png'
 import RotatingImage from '../components/RotateImage'
 import { useNavigate } from 'react-router-dom'
 import { GlobalContext } from './GlobalLayout'
 const Kontroll = () => {
-    
+    const [navdireaction, setnavdireaction] = useState<'right'|'left'>('right')
+    const [navpath, setnavpath] = useState('')
     const globalcontext = useContext(GlobalContext)
     const navigate = useNavigate()
 
@@ -30,16 +31,21 @@ const Kontroll = () => {
             navigate('/')
           }
     },[globalcontext?.user])
+
+    useEffect(()=>{
+        if (navpath) {
+          navigate(navpath)
+        }
+      },[navpath])
     return (
-        <AnimatePresence>
             <motion.div
             initial={{ x: 300 }}
             animate={{ x: 0 }}
-            exit={{ x:-600 }}
+            exit={{x:navdireaction==='right'?600:-600 }}
             transition={{duration:0.2, type:'tween'}}
             > 
             <RotatingImage left={false}/>
-            <Navbar />
+            <Navbar setnavdireaction={setnavdireaction} setnavpath={setnavpath}/>
             <div className=" hide-scrollbar h-[800px] w-screen overflow-y-scroll overflow-x-hidden flex flex-col items-center pt-[74px]  ">
                 <h5 className=" text-[16px] text-[#444f55] mt-1 font-normal">Dagens tall</h5>
                 <h5 className=" text-[70px] text-[#444f55] mt-0 font-bold tracking-tight leading-snug ">
@@ -78,7 +84,6 @@ const Kontroll = () => {
                 </div>
             </div>
         </motion.div>
-    </AnimatePresence>
   )
 }
 

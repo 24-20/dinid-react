@@ -254,7 +254,7 @@ const Onboarding = () => {
                             transition={{duration:0.1, type:'tween'}}
                         >
                             <AlertDialogDescription className='  mb-8 text-center' >
-                                Jeg forstår at ved brudd på regler kan min konto bli sperret.
+                                Jeg forstår at ved brudd på regler vil min konto bli sperret.
                             </AlertDialogDescription>
                             <div className=' mb-1'></div>
                             <AlertDialogFooter>

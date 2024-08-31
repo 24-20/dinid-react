@@ -10,11 +10,13 @@ import Navbar from '../components/Navbar';
 import { useNavigate } from 'react-router-dom';
 import { GlobalContext } from './GlobalLayout';
 import { useContext, useEffect, useState } from 'react';
-import {AnimatePresence, motion} from 'framer-motion'
+import {motion} from 'framer-motion'
 import Popup from '../components/Popup';
 const Førerkort = ({interactive,data}:{interactive:boolean,data:{name:string|undefined,birthday:string|undefined,img:string|undefined}|undefined}) => {
   const navigate = useNavigate()
   const [displaytutorial, setdisplaytutorial] = useState(false)
+  const [navdireaction, setnavdireaction] = useState<'right'|'left'>('right')
+  const [navpath, setnavpath] = useState('')
   const globalcontext = useContext(GlobalContext)
   useEffect(()=>{
     const tutorial = sessionStorage.getItem("tutorial_finished");
@@ -43,9 +45,13 @@ const Førerkort = ({interactive,data}:{interactive:boolean,data:{name:string|un
 
   },[globalcontext?.user])
 
-
+  useEffect(()=>{
+    if (navpath) {
+      navigate(navpath)
+    }
+  },[navpath])
   return (
-    <AnimatePresence>
+    <>
       {
         displaytutorial&&interactive &&
         <Popup display={displaytutorial}/>
@@ -54,12 +60,15 @@ const Førerkort = ({interactive,data}:{interactive:boolean,data:{name:string|un
       <motion.div
       initial={{ x: -300 }}
       animate={{ x: 0 }}
-      exit={{ x:600 }}
+      exit={{ 
+        transition: {duration:0.5, type:'tween'},
+        x:navdireaction==='right'?600:-600
+       }}
       transition={{duration:0.1, type:'tween'}}
       >
       {
         interactive&&
-        <Navbar />
+        <Navbar setnavdireaction={setnavdireaction} setnavpath={setnavpath}/>
       }
       <div className={` hide-scrollbar h-screen w-full overflow-y-scroll ${!interactive?' h-full scale-90 overflow-y-hidden ':'pt-[74px]'} 
         overflow-x-hidden flex flex-col items-center  `}>
@@ -71,7 +80,7 @@ const Førerkort = ({interactive,data}:{interactive:boolean,data:{name:string|un
                 <div className="  w-fit h-fit absolute right-[2px] top-[10px]">
                   <JumpingLetter />
                 </div>
-                <img alt="ingen bilde lagt til" src={data?data.img:globalcontext?.user?.img} className=" w-full object-cover"/>
+                <img loading='eager' alt="..." src={data?data.img:globalcontext?.user?.img} className=" w-full object-cover"/>
                 <div className=" border-[#E8E8E8] border-t border-r absolute bottom-0 left-0 w-fit h-fit p-1 bg-white">
                   <Maximize2 size={18} className=" text-[#444f55]"/>
                 </div>
@@ -94,10 +103,10 @@ const Førerkort = ({interactive,data}:{interactive:boolean,data:{name:string|un
           </div>
           {
             interactive&&
-            <Footer />
+            <Footer setnavdireaction={setnavdireaction} setnavpath={setnavpath}/>
           }
       </motion.div>
-    </AnimatePresence>
+    </>
   )
 }
 
