@@ -41,7 +41,7 @@ const Home = () => {
 
                 <div className=' flex flex-col gap-5 w-full items-center '>
                     <NavLink to={'/f'} className=' w-[60%] py-3.5 flex bg-[#FF9600] items-center justify-center font-semibold'><div>Ditt test-førerkort</div></NavLink>
-                    <NavLink to={'/detaljer'} className=' w-[60%] py-3.5 flex bg-[#EDEDED] items-center justify-center font-semibold'><div>Se dine detaljer</div></NavLink>
+                    <NavLink to={'/f'} className=' w-[60%] py-3.5 flex bg-[#EDEDED] items-center justify-center font-semibold'><div>Se dine detaljer</div></NavLink>
                 </div>
             </div>
         </motion.div>
