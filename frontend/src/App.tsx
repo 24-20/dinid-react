@@ -12,8 +12,8 @@ import './global.css'
 import Contact from './pages/Contact'
 import Home from './pages/home'
 import Details from './pages/Details'
+import Personalia from './pages/Personalia'
 function App() {
-  
   return (
     <>
     
@@ -25,6 +25,7 @@ function App() {
           <Route path='f' element={ <Førerkort interactive data={undefined} />}/>
           <Route path='k' element={ <Kontroll />}/>
           <Route path='h' element={ <Home />}/>
+          <Route path='p' element={ <Personalia />}/>
           <Route path='onboarding' element={ <Onboarding  />}/>
           <Route path='detaljer' element={ <Details  />}/>
           <Route path='contact' element={ <Contact  />}/>

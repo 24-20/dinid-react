@@ -34,9 +34,9 @@ const Home = () => {
                     </div>
                 </div>
 
-                <div className=' text-[46px]  tracking-tight font-semibold '>
-                    <p className=' text-[#e9e9e9] leading-8'>NORGE</p>
-                    <p className=' text-[#f7f7f7] leading-8'>NOREG</p>
+                <div className=' text-[42px]  tracking-tight font-semibold '>
+                    <p className=' text-[#e9e9e9] leading-7'>NORGE</p>
+                    <p className=' text-[#f7f7f7] leading-7'>NOREG</p>
                 </div>
 
                 <div className=' flex flex-col gap-5 w-full items-center '>

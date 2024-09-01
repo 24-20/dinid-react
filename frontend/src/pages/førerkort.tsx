@@ -80,12 +80,20 @@ const Førerkort = ({interactive,data}:{interactive:boolean,data:{name:string|un
                 <div className="  w-fit h-fit absolute right-[2px] top-[10px]">
                   <JumpingLetter />
                 </div>
-                <img loading='eager' alt="..." src={data?data.img:globalcontext?.user?.img} className=" w-full object-cover"/>
-                <div className=" border-[#E8E8E8] border-t border-r absolute bottom-0 left-0 w-fit h-fit p-1 bg-white">
+                <img loading='eager' alt="..." src={data?data.img:globalcontext?.user?.img} className=" w-full object-cover" onClick={()=>{
+                  if (interactive) {
+                    setnavpath('/p')
+                  }
+                }}/>
+                <div className=" border-[#E8E8E8] border-t border-r absolute bottom-0 left-0 w-fit h-fit p-1 bg-white" onClick={()=>{
+                  if (interactive) {
+                    setnavpath('/p')
+                  }
+                }}>
                   <Maximize2 size={18} className=" text-[#444f55]"/>
                 </div>
               </div>
-              <h1 className=" text-[22px] text-[#444f55] mt-2">{data?data?.name?.toUpperCase():globalcontext?.user?.name.toUpperCase()}</h1>
+              <h1 className=" text-[24px] text-[#444f55] mt-2">{data?data?.name?.toUpperCase():globalcontext?.user?.name.toUpperCase()}</h1>
               <h5 className=" text-[16px] text-[#444f55] mt-1 font-light">{data?data.birthday:globalcontext?.user?.birthday} 81271</h5>
               <div className=" flex gap-3 w-full h-fit ml-8 mt-10 z-10">
                   <InfoButton className="border-l-[5px] flex flex-col p-1 pl-2.5 justify-between w-[44.5%]">
