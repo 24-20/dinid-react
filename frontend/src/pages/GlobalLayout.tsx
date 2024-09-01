@@ -28,6 +28,7 @@ const GlobalLayout = () => {
         {
           user?.img&&
           <Helmet>
+          <link rel="preload" href={user.img} as="image"/>
           <link rel="prefetch" href={user.img} as="image"/>
         </Helmet>
         }
