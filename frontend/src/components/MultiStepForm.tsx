@@ -55,7 +55,7 @@ export function MultiStepFormCrypto() {
  
   return (
     <MultiStepForm
-      className={'space-y-10 p-8 rounded-xl border'}
+      className={'space-y-10 p-6 py-8 rounded-xl border'}
       schema={FormSchema}
       form={form}
       onSubmit={onSubmit}
@@ -64,16 +64,17 @@ export function MultiStepFormCrypto() {
         className={'flex w-full flex-col justify-center space-y-6'}
       >
         <h2 className={'text-xl font-bold'}>Betal med Crypto</h2>
-        <p className=' text-gray-500 text-sm font-bold '>Din email brukes kun til å sende tilgangs-kode når betaling er fullført,
-        og vil bli slettet fra vår database etter 24 timer.</p>
+        <p className=' text-gray-500 text-sm font-medium '>Din email brukes kun til å sende tilgangs-kode.
+        Den vil bli <span className=' font-bold'>slettet for alltid</span> fra vår database etter <span className=' font-bold'>24 timer</span>.</p>
 
  
         <MultiStepFormContextProvider>
           {({ currentStepIndex }:{currentStepIndex:number}) => (
             <Stepper
-              steps={['Account', 'Profile', 'Review']}
-              currentStep={currentStepIndex}
-            />
+            rows={1}
+            steps={['Email', 'Verifiser', 'Betal']}
+            currentStep={currentStepIndex}
+          />
           )}
         </MultiStepFormContextProvider>
       </MultiStepFormHeader>
@@ -117,7 +118,7 @@ export function MultiStepFormKontanter() {
  
   return (
     <MultiStepForm
-      className={'space-y-10 p-8 rounded-xl border'}
+      className={'space-y-10 p-6 py-8 rounded-xl border'}
       schema={FormSchema}
       form={form}
       onSubmit={onSubmit}
@@ -126,11 +127,15 @@ export function MultiStepFormKontanter() {
         className={'flex w-full flex-col justify-center space-y-6'}
       >
         <h2 className={'text-xl font-bold'}>Betal med Kontanter</h2>
+        <p className=' text-gray-500 text-sm font-medium '>Din email brukes kun til å sende tilgangs-kode.
+        Den vil bli <span className=' font-bold'>slettet for alltid</span> fra vår database etter <span className=' font-bold'>24 timer</span>.</p>
+
  
         <MultiStepFormContextProvider>
           {({ currentStepIndex }:{currentStepIndex:number}) => (
             <Stepper
-              steps={['Account', 'Profile', 'Review']}
+              steps={['Email', 'Verifiser', 'Område','Chat','Betal']}
+              rows={2}
               currentStep={currentStepIndex}
             />
           )}
