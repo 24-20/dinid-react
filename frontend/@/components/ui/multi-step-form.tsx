@@ -365,17 +365,7 @@ function AnimatedStep({
     }
   }, [isActive]);
  
-  useEffect(() => {
-    if (isActive && stepRef.current) {
-      const focusableElement = stepRef.current.querySelector(
-        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
-      );
- 
-      if (focusableElement) {
-        (focusableElement as HTMLElement).focus();
-      }
-    }
-  }, [isActive]);
+
  
   if (!shouldRender) {
     return null;
