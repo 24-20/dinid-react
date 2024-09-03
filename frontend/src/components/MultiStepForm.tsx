@@ -26,12 +26,15 @@ import { ArrowLeft } from 'lucide-react';
 import CryptoPayment from './CryptoPayment';
 import { useState } from 'react';
 import { createPaymentID } from '../firebase/firebaseUtils';
+import { getMoneroPrice } from '../utils';
+import { ClipLoader } from 'react-spinners';
 const FormSchema = createStepSchema({
   zodemail: z.object({
     email: z.string().email(),
   }),
   zodpaymentid: z.object({
     id: z.string(),
+    amountmonero: z.string()
   })
 });
  
@@ -46,6 +49,7 @@ export function MultiStepFormCrypto() {
       },
       zodpaymentid: {
         id: '',
+        amountmonero:''
       },
     },
     reValidateMode: 'onBlur',
@@ -206,10 +210,11 @@ function ConfirmEMailStep() {
       setloading(true)
       const id = await createPaymentID(values.zodemail.email)
       form.setValue('zodpaymentid.id',id.data.paymentId)
-      setTimeout(() => {
-        setloading(false)
-        nextStep(e)
-      }, 1000);
+      const price = await getMoneroPrice()
+      const amountmonero = 50/Number(price['USD'])
+      form.setValue('zodpaymentid.amountmonero',amountmonero)
+      setloading(false)
+      nextStep(e)
   }
   return (    
       <div className={'flex flex-col gap-4'}>
@@ -230,7 +235,7 @@ function ConfirmEMailStep() {
           }} >
             {
               loading?
-              <div>...</div>
+              <ClipLoader size={18} className=' mx-12 ' color='black'/>
               :
               <div>Generer Payment ID</div>
             }
@@ -252,7 +257,7 @@ function SendCryptoStep() {
             <span>Email</span>: <span>{values.zodemail.email}</span>
           </div>
         </div>
-        <CryptoPayment paymentID={values.zodpaymentid.id}/>
+        <CryptoPayment paymentID={values.zodpaymentid.id} amount={values.zodpaymentid.amountmonero}/>
  
         <div className="flex justify-end space-x-2">
           <Button type={'button'} variant={'outline'} onClick={prevStep}>

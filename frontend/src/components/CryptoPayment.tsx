@@ -1,31 +1,14 @@
 import { useEffect, useState } from 'react'
-import { getMoneroPrice } from '../utils'
 
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 import { Check, Clipboard } from 'lucide-react';
 
-const CryptoPayment = ({paymentID}:{paymentID:string}) => {
-    const [moneroprice, setmoneroprice] = useState<string|undefined>(undefined)
+const CryptoPayment = ({paymentID,amount}:{paymentID:string,amount:string}) => {
     const [copydamount, setcopydamount] = useState<boolean>(false)
     const [copydwallet, setcopydwallet] = useState<boolean>(false)
     const [copydpaymentid, setcopydpaymentid] = useState<boolean>(false)
     
-    const [amount, setamount] = useState<number|undefined>(undefined)
     const WALLET = '46Dsf2uraveU3FMXXFPXWXX4gcUNvVninbX4zjuT58frXfP12Ua82vvfxku3x8pD4G9KRvgqh9Z9wSa83XpLS39nU1q3mU3'
-    useEffect(()=>{
-        async function des() {
-            const price = await getMoneroPrice()
-            setmoneroprice(price['USD'])
-        }
-        des()
-        
-    },[])
-    useEffect(()=>{
-        if (moneroprice) {
-            let amountmonero = 50/Number(moneroprice)
-            setamount(amountmonero)
-        }
-    },[moneroprice])
     useEffect(()=>{
       setTimeout(() => {
         setcopydwallet(false)
