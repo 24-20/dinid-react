@@ -5,6 +5,7 @@ import { getStorage, ref, deleteObject, listAll, uploadBytes, getDownloadURL } f
 import { ChangeEvent } from "react";
 import { nanoid } from 'nanoid';
 import { UserType } from "../types/User";
+import { generateRandomId16 } from "../utils";
 async function deleteImages(folder:string) {
 
     const storage = getStorage();
@@ -157,8 +158,38 @@ async function getUsers () {
 async function deleteUser (id:string) {
     const usersref = doc(db, 'Users',id.toString())
     await deleteDoc(usersref)
+}
+
+async function createPaymentID (email:string):Promise<{ data: any; error: number|false; }> {
+    const usersref = doc(db, 'paymentIDs',email.toString())
+    try {
+        const initid = await getDoc(usersref)
+
+        if (initid.data()) {
+            return {data:initid.data(),error:false}
+        } 
+        const newid = generateRandomId16()
+
+        try {
+            await setDoc(usersref,{
+                paymentId:newid
+            })
+            return {data:{paymentId:newid},error:false}
+
+        } catch (error) {
+            return {error:2,data:false}
+        }
+
+
+    } catch (error) {
+        console.log(error)
+        return {error:1,data:false}
+    }
+    
 
     
 }
 
-export {getUser, createUser,getDagenstall,addDataUser, deleteImages, uploadImage, setDagenstall, getUsers, deleteUser, updateDataUser}
+
+
+export {getUser, createUser,getDagenstall,addDataUser, deleteImages, uploadImage, setDagenstall, getUsers, deleteUser, updateDataUser, createPaymentID}

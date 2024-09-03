@@ -27,7 +27,7 @@ const Contact = () => {
                 <TypographyH3 className=" mt-12">
                   Hvordan funker det?
                 </TypographyH3>
-                <TypographyList className=''>
+                <TypographyList className=' text-sm'>
                   <li>
                     Begynn med å verifisere din email, dette gjøres for å forsikre oss og 
                     deg om at du har tilgang til den email adressen tilganskoden blir
@@ -97,7 +97,8 @@ const Contact = () => {
                   <AccordionItem value="item-3">
                     <AccordionTrigger>Hvor stabil er tjenesten?</AccordionTrigger>
                     <AccordionContent>
-                    <span className=" font-bold">Tjenesten har hatt 100% oppetid i løpet av de siste 6 månedene</span> 
+                    <span className=" font-bold">Tjenesten har hatt 100% oppetid i
+                       løpet av de siste 6 månedene</span> 
                     <br />
 
                     </AccordionContent>

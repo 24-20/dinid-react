@@ -23,12 +23,15 @@ import {
 } from '../../@/components/ui/multi-step-form';
 import Stepper from './Stepper';
 import { ArrowLeft } from 'lucide-react';
+import CryptoPayment from './CryptoPayment';
+import { useState } from 'react';
+import { createPaymentID } from '../firebase/firebaseUtils';
 const FormSchema = createStepSchema({
   zodemail: z.object({
     email: z.string().email(),
   }),
-  zodotp: z.object({
-    otp: z.string().min(4),
+  zodpaymentid: z.object({
+    id: z.string(),
   })
 });
  
@@ -41,8 +44,8 @@ export function MultiStepFormCrypto() {
       zodemail: {
         email: '',
       },
-      zodotp: {
-        otp: '',
+      zodpaymentid: {
+        id: '',
       },
     },
     reValidateMode: 'onBlur',
@@ -63,37 +66,38 @@ export function MultiStepFormCrypto() {
       <MultiStepFormHeader
         className={'flex w-full flex-col justify-center space-y-6'}
       >
-        <h2 className={'text-xl font-bold'}>Betal med Crypto</h2>
-        <p className=' text-gray-500 text-sm font-medium '>Din email brukes kun til å sende tilgangs-kode.
-        Den vil bli <span className=' font-bold'>slettet for alltid</span> fra vår database etter <span className=' font-bold'>24 timer</span>.</p>
-
- 
         <MultiStepFormContextProvider>
           {({ currentStepIndex }:{currentStepIndex:number}) => (
+            <>
+            <h2 className={'text-xl font-bold flex justify-between'}><div>Betal med Crypto</div><div >500Kr</div></h2>
+            {
+              (currentStepIndex===0 || currentStepIndex===1)&&
+              
+              <p className=' text-gray-500 text-sm font-medium '>Din email brukes kun til å sende tilgangs-kode.
+              Den vil bli <span className=' font-bold'>slettet for alltid</span> fra vår database etter <span className=' font-bold'>24 timer</span>.</p>
+              
+            }
+             
             <Stepper
-            rows={1}
-            steps={['Email', 'Verifiser', 'Betal']}
-            currentStep={currentStepIndex}
-          />
+              steps={['Email','Bekreft', 'Betal']}
+              rows={2}
+              currentStep={currentStepIndex}
+            />
+            </>
           )}
-        </MultiStepFormContextProvider>
+          </MultiStepFormContextProvider>
       </MultiStepFormHeader>
  
       <MultiStepFormStep name="zodemail">
         <EnterEMailStep />
       </MultiStepFormStep>
-
-      <MultiStepFormStep name="zodotp">
+      <MultiStepFormStep >
         <ConfirmEMailStep />
       </MultiStepFormStep>
- 
-      <MultiStepFormStep name="profile">
+      <MultiStepFormStep name="review">
         <SendCryptoStep />
       </MultiStepFormStep>
  
-      <MultiStepFormStep name="review">
-        <ReviewStep />
-      </MultiStepFormStep>
     </MultiStepForm>
   );
 }
@@ -104,9 +108,7 @@ export function MultiStepFormKontanter() {
       zodemail: {
         email: '',
       },
-      zodotp: {
-        otp: '',
-      },
+      
     },
     reValidateMode: 'onBlur',
     mode: 'onBlur',
@@ -126,18 +128,26 @@ export function MultiStepFormKontanter() {
       <MultiStepFormHeader
         className={'flex w-full flex-col justify-center space-y-6'}
       >
-        <h2 className={'text-xl font-bold'}>Betal med Kontanter</h2>
-        <p className=' text-gray-500 text-sm font-medium '>Din email brukes kun til å sende tilgangs-kode.
-        Den vil bli <span className=' font-bold'>slettet for alltid</span> fra vår database etter <span className=' font-bold'>24 timer</span>.</p>
 
- 
         <MultiStepFormContextProvider>
           {({ currentStepIndex }:{currentStepIndex:number}) => (
+            <>
+            <h2 className={'text-xl font-bold'}>Betal med Kontanter</h2>
+            {
+              (currentStepIndex===0 || currentStepIndex===1)&&
+              
+              <p className=' text-gray-500 text-sm font-medium '>Din email brukes kun til å sende tilgangs-kode.
+              Den vil bli <span className=' font-bold'>slettet for alltid</span> fra vår database etter <span className=' font-bold'>24 timer</span>.</p>
+              
+            }
+
+             
             <Stepper
               steps={['Email', 'Verifiser', 'Område','Chat','Betal']}
               rows={2}
               currentStep={currentStepIndex}
             />
+            </>
           )}
         </MultiStepFormContextProvider>
       </MultiStepFormHeader>
@@ -146,7 +156,7 @@ export function MultiStepFormKontanter() {
         <EnterEMailStep />
       </MultiStepFormStep>
 
-      <MultiStepFormStep name="zodotp">
+      <MultiStepFormStep >
         <ConfirmEMailStep />
       </MultiStepFormStep>
  
@@ -154,9 +164,6 @@ export function MultiStepFormKontanter() {
         <SendKontanterStep />
       </MultiStepFormStep>
  
-      <MultiStepFormStep name="review">
-        <ReviewStep />
-      </MultiStepFormStep>
     </MultiStepForm>
   );
 }
@@ -180,10 +187,11 @@ function EnterEMailStep() {
           )}
         />
         <div className="flex justify-end">
+          
           <Button onClick={(e)=>{
             nextStep(e)
           }} disabled={!isStepValid()}>
-            Motta Engangskode
+            Neste
           </Button>
         </div>
       </div>
@@ -191,52 +199,66 @@ function EnterEMailStep() {
   );
 }
 function ConfirmEMailStep() {
-  const { form, nextStep,prevStep, isStepValid } = useMultiStepFormContext();
- 
-  return (
-    <Form {...form}>
+  const { form, nextStep,prevStep } = useMultiStepFormContext();
+  const values = form.getValues();
+  const [loading, setloading] = useState(false)
+  async function handleonclick(e:React.SyntheticEvent<Element, Event>) {
+      setloading(true)
+      const id = await createPaymentID(values.zodemail.email)
+      form.setValue('zodpaymentid.id',id.data.paymentId)
+      setTimeout(() => {
+        setloading(false)
+        nextStep(e)
+      }, 1000);
+  }
+  return (    
       <div className={'flex flex-col gap-4'}>
+        <p className=' text-orange-500 text-sm'>
+          Viktig! Tilgangskoden sendes til oppgitt e-post etter betaling. 
+          Sørg for at adressen er korrekt og tilgjengelig.
+        </p>
+        
+          <Input  value={values.zodemail.email} disabled/>
+              
  
-        <FormField
-          name="zodotp.otp"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Enganskode</FormLabel>
-              <FormControl>
-                <Input type="otp" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
- 
-        <div className="flex justify-end space-x-2">
+        <div className="flex justify-between">
           <Button type={'button'} className=' flex gap-1' variant={'outline'} onClick={prevStep}>
-            <ArrowLeft size={16}/> <div>Bruk annen email</div>
+            <ArrowLeft size={16}/> <div>Tilbake</div>
           </Button>
-          <Button type='submit' onClick={nextStep} disabled={!isStepValid()}>
-            Verifiser
+          <Button disabled={loading} onClick={(e)=>{
+              handleonclick(e as React.SyntheticEvent<Element, Event>)
+          }} >
+            {
+              loading?
+              <div>...</div>
+              :
+              <div>Generer Payment ID</div>
+            }
+          
           </Button>
         </div>
       </div>
-    </Form>
   );
 }
  
 function SendCryptoStep() {
-  const { form, nextStep, prevStep } = useMultiStepFormContext();
- 
+  const { form, prevStep } = useMultiStepFormContext();
+  const values = form.getValues();
   return (
     <Form {...form}>
       <div className={'flex flex-col gap-4'}>
-       <div>send 50 usd til wallet:12189470912489071240798</div>
+      <div className={'flex flex-col space-y-2 text-sm'}>
+          <div>
+            <span>Email</span>: <span>{values.zodemail.email}</span>
+          </div>
+        </div>
+        <CryptoPayment paymentID={values.zodpaymentid.id}/>
  
         <div className="flex justify-end space-x-2">
           <Button type={'button'} variant={'outline'} onClick={prevStep}>
             Tilbake
           </Button>
  
-          <Button onClick={nextStep}>Neste</Button>
         </div>
       </div>
     </Form>
@@ -262,29 +284,3 @@ function SendKontanterStep() {
   );
 }
  
-function ReviewStep() {
-  const { prevStep, form } = useMultiStepFormContext<typeof FormSchema>();
-  const values = form.getValues();
- 
-  return (
-    <div className={'flex flex-col space-y-4'}>
-      <div className={'flex flex-col space-y-4'}>
-        <div>Great! Please review the values.</div>
- 
-        <div className={'flex flex-col space-y-2 text-sm'}>
-          <div>
-            <span>Email</span>: <span>{values.zodemail.email}</span>
-          </div>
-        </div>
-      </div>
- 
-      <div className="flex justify-end space-x-2">
-        <Button type={'button'} variant={'outline'} onClick={prevStep}>
-          Back
-        </Button>
- 
-        <Button type={'submit'}>Create Account</Button>
-      </div>
-    </div>
-  );
-}
