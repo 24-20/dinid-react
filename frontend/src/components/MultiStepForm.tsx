@@ -28,6 +28,9 @@ import { useState } from 'react';
 import { createPaymentID } from '../firebase/firebaseUtils';
 import { getMoneroPrice } from '../utils';
 import { ClipLoader } from 'react-spinners';
+import SearchDropdown from './SearchDropdown';
+import { Label } from '../../@/components/ui/label';
+import { byer } from '../data';
 const FormSchema = createStepSchema({
   zodemail: z.object({
     email: z.string().email(),
@@ -35,7 +38,10 @@ const FormSchema = createStepSchema({
   zodpaymentid: z.object({
     id: z.string(),
     amountmonero: z.string()
-  })
+  }),
+  zodcity: z.object({
+    zodcity:z.string().min(2)
+  }),
 });
  
 type FormValues = z.infer<typeof FormSchema>;
@@ -112,7 +118,13 @@ export function MultiStepFormKontanter() {
       zodemail: {
         email: '',
       },
-      
+      zodpaymentid: {
+        id: '',
+        amountmonero:''
+      },
+      zodcity:{
+        zodcity:''
+      }
     },
     reValidateMode: 'onBlur',
     mode: 'onBlur',
@@ -136,28 +148,37 @@ export function MultiStepFormKontanter() {
         <MultiStepFormContextProvider>
           {({ currentStepIndex }:{currentStepIndex:number}) => (
             <>
-            <h2 className={'text-xl font-bold'}>Betal med Kontanter</h2>
-            {
-              (currentStepIndex===0 || currentStepIndex===1)&&
-              
-              <p className=' text-gray-500 text-sm font-medium '>Din email brukes kun til å sende tilgangs-kode.
-              Den vil bli <span className=' font-bold'>slettet for alltid</span> fra vår database etter <span className=' font-bold'>24 timer</span>.</p>
-              
-            }
+            <h2 className={'text-xl font-bold flex justify-between'}><div>Betal med Kontanter</div><div >800Kr</div></h2>
+
+            
 
              
             <Stepper
-              steps={['Email', 'Verifiser', 'Område','Chat','Betal']}
+              steps={['Område', 'Verifiser', 'Chat','Planlegg','Betal']}
               rows={2}
               currentStep={currentStepIndex}
             />
+            {
+              (currentStepIndex===0 )&&
+              
+              <p className=' text-gray-500 text-sm font-medium '>
+                Velg hvilke område du ønsker at transaksjonen skal foregå. 
+                Vi kobler deg opp med en representant derfra.
+                
+                </p>
+              
+            }
             </>
           )}
         </MultiStepFormContextProvider>
       </MultiStepFormHeader>
 
-      <MultiStepFormStep name="zodemail">
-        <EnterEMailStep />
+      <MultiStepFormStep name='zodcity'>
+        <LocationStep />
+      </MultiStepFormStep>
+
+      <MultiStepFormStep >
+        <ConfirmLocationStep />
       </MultiStepFormStep>
 
       <MultiStepFormStep >
@@ -246,6 +267,34 @@ function ConfirmEMailStep() {
   );
 }
  
+function ConfirmLocationStep() {
+  const { form, nextStep,prevStep } = useMultiStepFormContext();
+  const values = form.getValues();
+  const city = values.zodcity.zodcity as 'Alta'
+  return (    
+      <div className={'flex flex-col gap-4'}>
+        {
+          (byer[city])?
+          <p className=' text-blue-500 text-sm'>
+            Det finnes 1 eller flere Representanter i ditt område!
+        </p>
+        :
+        <p className=' text-destructive text-sm'>
+          Det finnes ingen representanter i ditt område, velg et annet område eller betal med crypto.
+        </p>
+        }
+        <div className="flex justify-between">
+          <Button type={'button'} className=' flex gap-1' variant={'outline'} onClick={prevStep}>
+            <ArrowLeft size={16}/> <div>Tilbake</div>
+          </Button>
+          <Button disabled={!byer[city]} onClick={nextStep}>
+              Åpne Chat
+          </Button>
+        </div>
+      </div>
+  );
+}
+ 
 function SendCryptoStep() {
   const { form, prevStep } = useMultiStepFormContext();
   const values = form.getValues();
@@ -288,4 +337,37 @@ function SendKontanterStep() {
     </Form>
   );
 }
+function LocationStep() {
+  const { form, nextStep } = useMultiStepFormContext();
+  const [selected, setselected] = useState('')
+  return (
+    <Form {...form}>
+      <div className={'flex flex-col gap-4'}>
+       <div className='flex gap-2 items-end mb-2 relative'>
+       <SearchDropdown setselected={setselected}/>
+       <FormField
+       
+          name="zodcity.zodcity"
+          render={({ field }) => (
+            <FormItem className=' h-full flex flex-col gap-0'>
+              <Label >{selected?'Du har valgt':'Ingen by valgt'}</Label>
+              <FormControl>
+                <Input  {...field} value={`${selected}`} disabled />
+              </FormControl>
+            </FormItem>
+          )}
+        />
+       </div>
+        <div className="flex justify-end space-x-2">
  
+          <Button onClick={(e)=>{
+
+            form.setValue('zodcity.zodcity',selected)
+            nextStep(e)
+          }} disabled={!selected}>Neste</Button>
+        </div>
+      </div>
+    </Form>
+  );
+}
+

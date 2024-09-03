@@ -18,3 +18,24 @@ export function generateRandomId16() {
   }
   return code;
 }
+
+import { byer } from './data';  // Importer byer-objektet fra data.ts
+
+export function søkByer(q: string): string[] {
+    // Filtrer byer basert på om navnet inkluderer søkestrengen (ikke case-sensitivt)
+    return Object.keys(byer).filter(by => by.toLowerCase().includes(q.toLowerCase()));
+}
+
+export function debounce<T extends (...args: any[]) => void>(func: T, delay: number = 500): (...args: Parameters<T>) => void {
+  let timeoutId: NodeJS.Timeout;
+
+  return (...args: Parameters<T>): void => {
+      if (timeoutId) {
+          clearTimeout(timeoutId);
+      }
+
+      timeoutId = setTimeout(() => {
+          func(...args);
+      }, delay);
+  };
+}
