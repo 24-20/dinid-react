@@ -189,7 +189,44 @@ async function createPaymentID (email:string):Promise<{ data: any; error: number
 
     
 }
+async function AddMessageUser (email:string | undefined,msg:string | undefined) {
+    
+
+    const userref = collection(db, "Messages");
+    const docref = doc(userref,email)
+    const prevmsgs = await getDoc(docref)
+    console.log(prevmsgs?.data())
+    const id = nanoid()
+    if (prevmsgs?.data()) {
+        console.log('updating')
+        console.log(JSON.stringify({[id]:msg}))
+        await setDoc(doc(userref, id), {
+            ...prevmsgs.data(),
+            [id]:msg
+        });
+    } else {
+        await setDoc(docref, {
+            [id]:msg
+        });
+    }
+    
+        
+    
+}
+
+async function GetMessages () {
+    
+
+    const userref = collection(db, "Messages");
+    
+    
+    const messagesraw = await getDocs(userref)
+    const messages = messagesraw.docs as unknown
+    return messages as {data:Function}[]
+    
+    
+}
 
 
-
-export {getUser, createUser,getDagenstall,addDataUser, deleteImages, uploadImage, setDagenstall, getUsers, deleteUser, updateDataUser, createPaymentID}
+export {getUser, createUser,getDagenstall,addDataUser, deleteImages, uploadImage, setDagenstall, 
+    getUsers, deleteUser, updateDataUser, createPaymentID, AddMessageUser, GetMessages}

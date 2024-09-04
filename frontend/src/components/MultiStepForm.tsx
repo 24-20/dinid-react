@@ -31,6 +31,7 @@ import { ClipLoader } from 'react-spinners';
 import SearchDropdown from './SearchDropdown';
 import { Label } from '../../@/components/ui/label';
 import { byer } from '../data';
+import { NavLink } from 'react-router-dom';
 const FormSchema = createStepSchema({
   zodemail: z.object({
     email: z.string().email(),
@@ -303,12 +304,15 @@ function SendCryptoStep() {
       <div className={'flex flex-col gap-4'}>
       <div className={'flex flex-col space-y-2 text-sm'}>
           <div>
-            <span>Email</span>: <span>{values.zodemail.email}</span>
+            
+            <p className=' text-blue-500'>Når betaling er mottatt og prosesert
+               vil vi sende tilgangskoden til <span className=' font-semibold'>{values.zodemail.email}</span></p>
           </div>
         </div>
         <CryptoPayment paymentID={values.zodpaymentid.id} amount={values.zodpaymentid.amountmonero}/>
- 
-        <div className="flex justify-end space-x-2">
+        
+        <div className="flex justify-between space-x-2 items-center">
+          <NavLink className='text-sm text-muted-foreground underline' to={`/support?mail=${values.zodemail.email}`}>Support</NavLink>
           <Button type={'button'} variant={'outline'} onClick={prevStep}>
             Tilbake
           </Button>

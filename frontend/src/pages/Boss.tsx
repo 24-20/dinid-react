@@ -1,6 +1,6 @@
 
 import { useEffect, useState } from 'react'
-import { createUser, getUsers, setDagenstall } from '../firebase/firebaseUtils'
+import { createUser, GetMessages, getUsers, setDagenstall } from '../firebase/firebaseUtils'
 import { Input } from '../../@/components/ui/input'
 import { Button } from '../../@/components/ui/button'
 import { ArrowRight, Clipboard } from 'lucide-react'
@@ -17,6 +17,7 @@ const Boss = () => {
     const [slug, setslug] = useState('')
     const [users, setusers] = useState<undefined | UserType[]>(undefined)
     const [update, setupdate] = useState<boolean>(false)
+    const [messages, setmessages] = useState<undefined | {data:Function}[]>(undefined)
     function wordsToObj(str:string) {
         // Split the string by commas to get an array of words
         const wordsArray = str.split(',');
@@ -50,6 +51,15 @@ const Boss = () => {
         }
         getUserutil()
     },[update])
+
+    useEffect(()=>{
+        async function getMessagesutil() {
+            const usersutil = await GetMessages() 
+            setmessages(usersutil) 
+        }
+        getMessagesutil()
+    },[update])
+    setmessages
     useEffect(()=>{
         document.getElementById("passinp")?.focus();
     },[])
@@ -131,6 +141,24 @@ const Boss = () => {
                         <>
                         <div className=' w-full h-[1px] bg-border'></div>
                         <DataTableDemo setupdate={setupdate} data={users}/>
+                        </>
+                    }
+                    {
+                        admin==='boss'&&messages &&
+                        <>
+                        <div className=' w-full h-[1px] bg-border'></div>
+                        <div>
+                            {
+                                messages.map((msg)=>{
+                                    return (
+                                        <div>
+                                            {JSON.stringify(msg?.data())}
+                                        </div>
+                                    )
+                                })
+                            }
+                        </div>
+                        
                         </>
                     }
                     

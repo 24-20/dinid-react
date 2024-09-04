@@ -26,7 +26,7 @@ export const byer = {
     "Steinkjer": false,
     "Stjørdal": false,
     "Verdalsøra": false,
-    "Trondheim": false,
+    "Trondheim": true,
     "Brekstad": false,
     "Orkanger": false,
     "Røros": false,
@@ -40,7 +40,7 @@ export const byer = {
     "Florø": false,
     "Førde": false,
     "Måløy": false,
-    "Bergen": false,
+    "Bergen": true,
     "Leirvik": false,
     "Odda": false,
     "Bryne": false,
@@ -106,5 +106,5 @@ export const byer = {
     "Brumunddal": false,
     "Moelv": false,
     "Tynset": false,
-    "Oslo": false
+    "Oslo": true
 };

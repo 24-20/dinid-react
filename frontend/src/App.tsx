@@ -13,6 +13,7 @@ import Contact from './pages/Contact'
 import Home from './pages/home'
 import Details from './pages/Details'
 import Personalia from './pages/Personalia'
+import Support from './pages/Support'
 function App() {
   return (
     <>
@@ -29,6 +30,7 @@ function App() {
           <Route path='onboarding' element={ <Onboarding  />}/>
           <Route path='detaljer' element={ <Details  />}/>
           <Route path='contact' element={ <Contact  />}/>
+          <Route path='support' element={ <Support  />}/>
           <Route path="*" element={<Landing />} />
         </Route>
       </Routes>

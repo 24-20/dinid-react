@@ -18,7 +18,7 @@ import { Search } from "lucide-react"
 import { Label } from "../../@/components/ui/label"
 const SearchDropdown = ({setselected}:{setselected:Function}) => {
     const [q,setq] = useState('')
-    const [filteredlist, setfilteredlist] = useState<string[]>(['Tromsø','Oslo'])
+    const [filteredlist, setfilteredlist] = useState<string[]>(['Oslo','Bergen','Tromsø','Trondheim'])
     useEffect(()=>{
         
             if (q) {

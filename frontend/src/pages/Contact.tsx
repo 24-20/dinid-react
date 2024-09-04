@@ -1,7 +1,7 @@
 
 import { MultiStepFormCrypto,MultiStepFormKontanter } from "../components/MultiStepForm"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../@/components/ui/tabs"
-import { TypographyH3, TypographyList } from "../components/Typography"
+import { TypographyH3 } from "../components/Typography"
 import {
   Accordion,
   AccordionContent,
@@ -17,59 +17,49 @@ const Contact = () => {
               <TabsList className="mt-12 mb-6" >
                 <TabsTrigger value="crypto" className=" relative">Betal med Crypto
                    <div className=" text-[10px] px-2 data-[state=active]:text-xl rounded-full absolute bg-blue-600 text-white left-[-30px] top-[-10px] -rotate-45">
-                    SPAR 40%
+                    SPAR 37%
                     </div>
                 </TabsTrigger>
                 <TabsTrigger value="kontanter">Betal med kontanter</TabsTrigger>
               </TabsList>
               <TabsContent value="crypto">
                 <MultiStepFormCrypto />
-                <TypographyH3 className=" mt-12">
+                <TypographyH3 className=" mt-12 mb-6">
                   Hvordan funker det?
                 </TypographyH3>
-                <TypographyList className=' text-sm'>
-                  <li>
-                    Begynn med å verifisere din email, dette gjøres for å forsikre oss og 
-                    deg om at du har tilgang til den email adressen tilganskoden blir
-                    sendt til når betaling er mottatt.
-                   </li>
-                   <div className=" w-full h-[1px] rounded-full bg-border mt-3"></div>
+                <h5 className="text-lg font-bold mb-1.5">E-postadresse </h5>
+                  <p className="text-sm">
+              E-posten din brukes kun til å sende tilgangskoden etter at betalingen er mottatt. Det er derfor avgjørende at du har
+              tilgang til denne e-posten, da det ikke finnes andre måter å motta koden på.
+                  </p>
 
-                  <li>
-                    Logg inn på Mymonero appen på pc eller mobil, velg send Crypto og fyll inn infoen vi gir deg på steg 3.
-                    Denne infoen inkluderer 
-                    <br />
-                    <span className=" font-bold">Amount: </span> 
-                    <br />
-                    <span className=" font-bold">To adress: </span> 
-                    <br />
-                    <span className=" font-bold">Payment ID: </span> 
-                    <br />
-                    Når betaling er sendt, går det vanligvis 10-60 minutter før vi mottar den.
+                  <h5 className="text-lg font-bold mb-1.5 mt-6">Slik sender du Monero til vår wallet</h5>
+                  <p className="text-sm">
+                    Du kan bruke MyMonero-appen eller en hvilken som helst annen Monero-wallet for å sende betaling. Når du kommer til betalingssiden, vil du motta følgende informasjon:
+                    <span className="font-semibold"> Beløp, </span> 
+                    <span className="font-semibold">Mottakeradresse, </span> 
+                    <span className="font-semibold">Betalings-ID. </span>
+                  </p>
+                  <p className="text-sm mt-4">
+                    For MyMonero-brukere: Logg inn på MyMonero-appen på PC eller mobil, velg "Send Crypto", og fyll inn informasjonen du har mottatt på betalingssiden. Når betalingen er sendt, tar det vanligvis 10-60 minutter før vi mottar den.
+                  </p>
+                  <p className="text-sm mt-4">
+                    Hvis du bruker en annen Monero-wallet, følger du tilsvarende trinn: Fyll inn beløpet, mottakeradressen og betalings-IDen som er oppgitt på betalingssiden.
+                  </p>
 
+                  <h5 className="text-lg font-bold mb-1.5 mt-6">Etter betaling</h5>
+                  <p className="text-sm">
+                    Når betalingen er mottatt, vil du få tilsendt en tilgangskode på e-posten du har oppgitt. Deretter sletter vi e-posten din fra databasen vår.
+                  </p>
 
-                  </li>
-                  <div className=" w-full h-[1px] rounded-full bg-border mt-3"></div>
-                  <li>Når betaling er mottatt vil vi sende deg tilganskode på den mailen du har oppgitt,
-                     deretter vil vi slette din email fra vår database.
-                  </li>
-                  <div className=" w-full h-[1px] rounded-full bg-border mt-3"></div>
-                  <li>
-                    Når du mottar tilganskoden på email, 
-                    kan du nå logge inn på tjenesten fra landingsiden. Første gang du logger inn 
-                    vil du bli bedt om å oppgi den infoen som skal vises på din test-ID, dette inkluderer:
-                    <br />
-                    <span className=" font-bold">Bilde: </span> 
-                    <br />
-                    <span className=" font-bold">Fullt navn: </span> 
-                    <br />
-                    <span className=" font-bold">Fødsels-dato: </span> 
-                    <br />
-                    Når alt er oppgitt og Vilkårne for bruk er godtatt, kan du begynne å bruke tjenesten.
-
-
-                  </li>
-                </TypographyList>
+                  <h5 className="text-lg font-bold mb-1.5 mt-6">Etter du har mottatt tilgangskoden</h5>
+                  <p className="text-sm">
+                    Når du mottar tilgangskoden, kan du logge inn på tjenesten fra landingssiden. Ved første innlogging må du oppgi informasjon som skal vises på din test-ID. 
+                    <span className="font-semibold"> Bilde, </span>
+                    <span className="font-semibold">Fullt navn og </span> 
+                    <span className="font-semibold">Fødselsdato. </span>
+                    Når all informasjon er gitt og vilkårene for bruk er akseptert, kan du begynne å bruke tjenesten.
+                  </p>
                 <TypographyH3 className=" mt-8">
                   FAQ
                 </TypographyH3>
