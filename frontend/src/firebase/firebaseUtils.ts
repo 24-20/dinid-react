@@ -198,7 +198,6 @@ async function AddMessageUser (email:string | undefined,msg:string | undefined) 
     console.log(prevmsgs?.data())
     const id = nanoid()
     if (prevmsgs?.data()) {
-        console.log('updating')
         console.log(JSON.stringify({[id]:msg}))
         await setDoc(doc(userref, id), {
             ...prevmsgs.data(),

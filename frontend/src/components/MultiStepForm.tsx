@@ -305,7 +305,7 @@ function SendCryptoStep() {
       <div className={'flex flex-col space-y-2 text-sm'}>
           <div>
             
-            <p className=' text-blue-500'>Når betaling er mottatt og prosesert
+            <p className=' text-blue-500'>Når vi hat motatt og prosesert betaling,
                vil vi sende tilgangskoden til <span className=' font-semibold'>{values.zodemail.email}</span></p>
           </div>
         </div>

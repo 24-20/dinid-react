@@ -29,8 +29,8 @@ const Contact = () => {
                 </TypographyH3>
                 <h5 className="text-lg font-bold mb-1.5">E-postadresse </h5>
                   <p className="text-sm">
-              E-posten din brukes kun til å sende tilgangskoden etter at betalingen er mottatt. Det er derfor avgjørende at du har
-              tilgang til denne e-posten, da det ikke finnes andre måter å motta koden på.
+                    E-posten din brukes kun til å sende tilgangskoden etter at vi har mottatt betalingen, og den vil slettes automatisk fra vår database etter 24 timer.
+                    Det er avgjørende at du har tilgang til oppgitt e-poste, da det ikke finnes andre måter å motta koden på.
                   </p>
 
                   <h5 className="text-lg font-bold mb-1.5 mt-6">Slik sender du Monero til vår wallet</h5>
@@ -49,7 +49,7 @@ const Contact = () => {
 
                   <h5 className="text-lg font-bold mb-1.5 mt-6">Etter betaling</h5>
                   <p className="text-sm">
-                    Når betalingen er mottatt, vil du få tilsendt en tilgangskode på e-posten du har oppgitt. Deretter sletter vi e-posten din fra databasen vår.
+                    Når vi hat motatt og prosesert betaling,, vil du få tilsendt en tilgangskode på e-posten du har oppgitt. Deretter sletter vi e-posten din fra databasen vår.
                   </p>
 
                   <h5 className="text-lg font-bold mb-1.5 mt-6">Etter du har mottatt tilgangskoden</h5>
@@ -96,7 +96,7 @@ const Contact = () => {
                   <AccordionItem value="item-4">
                     <AccordionTrigger>Jeg har ikke MyMonero konto.</AccordionTrigger>
                     <AccordionContent>
-                    <span className=" font-bold">MyMonero konto kan settes opp på 5 min eller du kan betale med kontant</span> 
+                    <span className=" font-bold">Du kan bruke hvordan som helst Monero wallet eller sette opp en MyMonero konto helt enkelt på 5 min. I tilleg kan betale med kontant</span> 
                     <br />
                     
                     </AccordionContent>
