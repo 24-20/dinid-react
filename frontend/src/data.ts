@@ -8,7 +8,7 @@ export const byer = {
     "Bardufoss": false,
     "Finnsnes": false,
     "Harstad": false,
-    "Tromsø": true, // Tromsø er true
+    "Tromsø": 'Tromsø', // Tromsø er false
     "Bodø": false,
     "Brønnøysund": false,
     "Fauske": false,
@@ -26,7 +26,7 @@ export const byer = {
     "Steinkjer": false,
     "Stjørdal": false,
     "Verdalsøra": false,
-    "Trondheim": true,
+    "Trondheim": false,
     "Brekstad": false,
     "Orkanger": false,
     "Røros": false,
@@ -40,7 +40,7 @@ export const byer = {
     "Florø": false,
     "Førde": false,
     "Måløy": false,
-    "Bergen": true,
+    "Bergen": false,
     "Leirvik": false,
     "Odda": false,
     "Bryne": false,
@@ -106,5 +106,19 @@ export const byer = {
     "Brumunddal": false,
     "Moelv": false,
     "Tynset": false,
-    "Oslo": true
+    "Oslo": 'Oslo'
 };
+import tromsøimg from './public/isak-bjørgedal.jpg'
+import osloimg from './public/jostlin12.jpg'
+export const representantdata = {
+    'Oslo':{
+        img:osloimg,
+        id:'054d6f37522a94beca5be20fa857792ea38181ec34593fdca204b8813707fb2a54',
+        name:'Johannes Stenstad'
+    },
+    'Tromsø':{
+        img:tromsøimg,
+        id:'05501da7df5cbd52231ecd2ae48f533cbc95890493eb70dff66782da7a43296949',
+        name:'Isak Bjørgedal'
+    }
+}

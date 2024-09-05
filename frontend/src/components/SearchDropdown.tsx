@@ -18,7 +18,7 @@ import { Search } from "lucide-react"
 import { Label } from "../../@/components/ui/label"
 const SearchDropdown = ({setselected}:{setselected:Function}) => {
     const [q,setq] = useState('')
-    const [filteredlist, setfilteredlist] = useState<string[]>(['Oslo','Bergen','Tromsø','Trondheim'])
+    const [filteredlist, setfilteredlist] = useState<string[]>([])
     useEffect(()=>{
         
             if (q) {
@@ -41,7 +41,7 @@ const SearchDropdown = ({setselected}:{setselected:Function}) => {
                 <DialogTitle>Søk Byer i Norge</DialogTitle>
             </DialogHeader>
         <div className=" w-full h-full flex flex-col gap-2 mt-2">
-            <Input value={q} onChange={e=>setq(e.target.value)} placeholder="Oslo"/>
+            <Input value={q} onChange={e=>setq(e.target.value)} placeholder="Trondheim..."/>
             {
                 filteredlist?filteredlist.map((res:any)=>{
                 i +=1
@@ -52,7 +52,6 @@ const SearchDropdown = ({setselected}:{setselected:Function}) => {
                     <DialogClose key={res}>
                     <div className=' h-auto  w-12/12 outline-none flex px-2 py-1 items-center hover:bg-background rounded justify-between overflow-hidden text-nowrap'
                         onClick={()=>{
-                            console.log(res)
                             setselected(res)
                             
                         }}>

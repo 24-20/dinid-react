@@ -22,7 +22,7 @@ import {
   useMultiStepFormContext,
 } from '../../@/components/ui/multi-step-form';
 import Stepper from './Stepper';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Check, Clipboard } from 'lucide-react';
 import CryptoPayment from './CryptoPayment';
 import { useState } from 'react';
 import { createPaymentID } from '../firebase/firebaseUtils';
@@ -30,8 +30,11 @@ import { getMoneroPrice } from '../utils';
 import { ClipLoader } from 'react-spinners';
 import SearchDropdown from './SearchDropdown';
 import { Label } from '../../@/components/ui/label';
-import { byer } from '../data';
+import { byer, representantdata } from '../data';
 import { NavLink } from 'react-router-dom';
+
+import sessionlogo from '../public/session_logo.webp'
+import CopyToClipboard from 'react-copy-to-clipboard';
 const FormSchema = createStepSchema({
   zodemail: z.object({
     email: z.string().email(),
@@ -155,7 +158,7 @@ export function MultiStepFormKontanter() {
 
              
             <Stepper
-              steps={['Område', 'Verifiser', 'Chat','Planlegg','Betal']}
+              steps={['Område', 'Verifiser', 'Chat']}
               rows={2}
               currentStep={currentStepIndex}
             />
@@ -182,9 +185,6 @@ export function MultiStepFormKontanter() {
         <ConfirmLocationStep />
       </MultiStepFormStep>
 
-      <MultiStepFormStep >
-        <ConfirmEMailStep />
-      </MultiStepFormStep>
  
       <MultiStepFormStep name="profile">
         <SendKontanterStep />
@@ -323,19 +323,49 @@ function SendCryptoStep() {
   );
 }
 function SendKontanterStep() {
-  const { form, nextStep, prevStep } = useMultiStepFormContext();
- 
+  const { form, prevStep } = useMultiStepFormContext();
+  const [copiedid, setcopiedid] = useState(false)
+  const values = form.getValues();
+  const city = values.zodcity.zodcity as 'Oslo'
+  const representant = representantdata[city]
   return (
     <Form {...form}>
       <div className={'flex flex-col gap-4'}>
-       <div>send 500 kroner til lishaug 56</div>
+       <div className=' w-full space-x-2 flex flex-col items-center'>
+        <div className=' flex flex-col-reverse gap-2 items-center justify-center w-10/12 h-fit'>
+          <span className=' text-lg font-medium text-center'  >
+            Legg til en representant fra {city} på Session for detaljer
+          </span> <img src={sessionlogo} className=' h-6' />
+        </div>
+        <p className=' text-sm mt-4'>Scan Qr kode</p>
+        <img src={representant.img} className=' w-6/12' alt="" />
+        <p className=' text-sm mt-4 mb-2'>Eller bruk Account ID</p>
+        <CopyToClipboard text={representant.id}
+            onCopy={() => setcopiedid(true)}>
+            <div className=' break-all items-center flex h-fit w-10/12 rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50'>        
+                <div className=' flex w-full justify-between relative text-center '>
+                    <div>{representant.id}</div>
+                    <div className='absolute h-fit w-fit bg-white p-1 right-0 top-0'>
+                      {
+                        copiedid?
+                        <Check size={16} className='  ' color='grey'/>
+                        :
+                        <Clipboard size={16} className=' ' color='grey' />
+                      }
+                    </div>
+                </div>
+                
+            </div>
+          </CopyToClipboard>
+
+
+       </div>
  
         <div className="flex justify-end space-x-2">
           <Button type={'button'} variant={'outline'} onClick={prevStep}>
             Tilbake
           </Button>
  
-          <Button onClick={nextStep}>Neste</Button>
         </div>
       </div>
     </Form>
@@ -344,6 +374,7 @@ function SendKontanterStep() {
 function LocationStep() {
   const { form, nextStep } = useMultiStepFormContext();
   const [selected, setselected] = useState('')
+  
   return (
     <Form {...form}>
       <div className={'flex flex-col gap-4'}>
