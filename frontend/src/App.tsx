@@ -14,6 +14,7 @@ import Home from './pages/home'
 import Details from './pages/Details'
 import Personalia from './pages/Personalia'
 import Support from './pages/Support'
+import Profile from './pages/Profile'
 function App() {
   return (
     <>
@@ -27,6 +28,7 @@ function App() {
           <Route path='k' element={ <Kontroll />}/>
           <Route path='h' element={ <Home />}/>
           <Route path='p' element={ <Personalia />}/>
+          <Route path='d' element={ <Profile />}/>
           <Route path='onboarding' element={ <Onboarding  />}/>
           <Route path='detaljer' element={ <Details  />}/>
           <Route path='contact' element={ <Contact  />}/>

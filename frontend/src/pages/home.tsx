@@ -20,7 +20,7 @@ const Home = () => {
 
             <div className=' flex h-[10%] w-full px-8 flex-row-reverse pt-[36px] '> 
                 <div className=' flex flex-col items-center w-fit h-fit'>
-                        <User size={20} />
+                        <NavLink to={'/d'}><User size={20} /></NavLink>
                         <div className=' text-[12px] font-medium leading-snug'>Profil</div>
                 </div>
             </div>

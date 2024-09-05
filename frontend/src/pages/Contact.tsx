@@ -105,6 +105,29 @@ const Contact = () => {
               </TabsContent>
               <TabsContent value="kontanter">
                 <MultiStepFormKontanter />
+                <TypographyH3 className=" mt-12 mb-6">
+                  Hvordan funker det?
+                </TypographyH3>
+                <h5 className="text-lg font-bold mb-1.5">Velg lokasjon </h5>
+                  <p className="text-sm">
+                  Først velger du din lokasjon ved å taste inn din by, dette gjøres for
+                   å sjekke om det er mulig å betale med kontanter der du befinner deg.</p>
+                  <h5 className="text-lg font-bold mb-1.5 mt-6">Privat chat på Session</h5>
+                  <p className="text-sm">
+                  Hvis kontantbetaling er tilgjengelig på din lokasjon, 
+                  blir du koblet til en av våre representanter via privat chat.
+                   Vi benytter Session.org til kommunikasjon for å sørge for at meldingene er privat. 
+                   Der blir vi også enige om detaljer for transaksjonen.
+                  </p>
+
+                  <h5 className="text-lg font-bold mb-1.5 mt-6">Etter du har mottatt tilgangskoden</h5>
+                  <p className="text-sm">
+                    Når du mottar tilgangskoden, kan du logge inn på tjenesten fra landingssiden. Ved første innlogging må du oppgi informasjon som skal vises på din test-ID. 
+                    <span className="font-semibold"> Bilde, </span>
+                    <span className="font-semibold">Fullt navn og </span> 
+                    <span className="font-semibold">Fødselsdato. </span>
+                    Når all informasjon er gitt og vilkårene for bruk er akseptert, kan du begynne å bruke tjenesten.
+                  </p>
               </TabsContent>
             </Tabs>
 

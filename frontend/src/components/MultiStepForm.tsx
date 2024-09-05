@@ -83,7 +83,9 @@ export function MultiStepFormCrypto() {
         <MultiStepFormContextProvider>
           {({ currentStepIndex }:{currentStepIndex:number}) => (
             <>
-            <h2 className={'text-xl font-bold flex justify-between'}><div>Betal med Crypto</div><div >500Kr</div></h2>
+            <h2 className={'text-xl font-bold flex flex-col gap-2'}><div>Betal med Crypto</div>
+            <div className='text-gray-600 underline' >500Kr for 3 Måneder</div>
+            </h2>
             {
               (currentStepIndex===0 || currentStepIndex===1)&&
               
@@ -152,7 +154,9 @@ export function MultiStepFormKontanter() {
         <MultiStepFormContextProvider>
           {({ currentStepIndex }:{currentStepIndex:number}) => (
             <>
-            <h2 className={'text-xl font-bold flex justify-between'}><div>Betal med Kontanter</div><div >800Kr</div></h2>
+            <h2 className={'text-xl font-bold flex flex-col gap-2'}><div>Betal med Kontanter</div>
+            <div className='text-gray-600 underline' >800Kr for 3 Måneder</div>
+            </h2>
 
             
 
@@ -334,7 +338,7 @@ function SendKontanterStep() {
        <div className=' w-full space-x-2 flex flex-col items-center'>
         <div className=' flex flex-col-reverse gap-2 items-center justify-center w-10/12 h-fit'>
           <span className=' text-lg font-medium text-center'  >
-            Legg til en representant fra {city} på Session for detaljer
+            Legg til vår representant fra {city}, på Session for mer detaljer.
           </span> <img src={sessionlogo} className=' h-6' />
         </div>
         <p className=' text-sm mt-4'>Scan Qr kode</p>
