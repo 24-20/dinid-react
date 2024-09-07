@@ -1,5 +1,5 @@
 
-import { useEffect, useState } from 'react'
+import { ReactNode, useEffect, useState } from 'react'
 import { createUser, GetMessages, getUsers, setDagenstall } from '../firebase/firebaseUtils'
 import { Input } from '../../@/components/ui/input'
 import { Button } from '../../@/components/ui/button'
@@ -150,9 +150,14 @@ const Boss = () => {
                         <div>
                             {
                                 messages.map((msg)=>{
+                                    const obj = msg.data()
+                                    const values = Object.values(obj);
                                     return (
-                                        <div>
-                                            {JSON.stringify(msg?.data())}
+                                        <div className=' mb-10'>
+                                            <h1>Meldinger fra {obj.email}</h1>
+                                            {
+                                                JSON.stringify(values)
+                                            }
                                         </div>
                                     )
                                 })

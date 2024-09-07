@@ -199,12 +199,13 @@ async function AddMessageUser (email:string | undefined,msg:string | undefined) 
     const id = nanoid()
     if (prevmsgs?.data()) {
         console.log(JSON.stringify({[id]:msg}))
-        await setDoc(doc(userref, id), {
+        await setDoc(doc(userref, email), {
             ...prevmsgs.data(),
             [id]:msg
         });
     } else {
         await setDoc(docref, {
+            email,
             [id]:msg
         });
     }
