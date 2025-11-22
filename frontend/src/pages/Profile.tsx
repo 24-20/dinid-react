@@ -5,8 +5,8 @@ import { Label } from '../../@/components/ui/label'
 import { GlobalContext } from './GlobalLayout';
 import { NavLink } from 'react-router-dom';
 const Profile = () => {
-    
   const globalcontext = useContext(GlobalContext)
+  const displayImage = globalcontext?.localImage ?? globalcontext?.user?.img
   return (
     <div className=' w-screen min-h-screen pt-8 px-4 flex flex-col gap-2'>
         
@@ -16,7 +16,7 @@ const Profile = () => {
         </div>
         <Label>Bilde</Label>
         <div className=' mb-6 items-center flex h-fit w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50'>        
-            <img src={globalcontext?.user?.img}/>
+            <img src={displayImage ?? undefined}/>
         </div>
         <Label>Navn</Label>
         <div className=' mb-6 items-center flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50'>        

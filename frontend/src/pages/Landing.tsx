@@ -8,6 +8,7 @@ import {
 import { ClipLoader } from 'react-spinners'
 import {getDagenstall, getUser} from '../firebase/firebaseUtils'
 import { GlobalContext } from './GlobalLayout'
+import type { User } from './GlobalLayout'
 import { NavLink } from 'react-router-dom'
 
 
@@ -39,8 +40,15 @@ const Landing = () => {
                 seterror(userobj.error)
                 sessionStorage.removeItem('id')
             } else {
+                const userData = userobj.data as User | undefined
+                if (!userData) {
+                    setValauthenting(false)
+                    seterror('Mangler brukerdata')
+                    sessionStorage.removeItem('id')
+                    return
+                }
                 sessionStorage.setItem('id',val)
-                globalcontext.setUser({...userobj.data,id:val,dagenstall:dagensdata.data.dagenstall})
+                globalcontext.setUser({...userData,id:val,dagenstall:dagensdata.data.dagenstall})
                 setValauthenting(false)
 
 

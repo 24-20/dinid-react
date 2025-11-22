@@ -18,6 +18,7 @@ const Førerkort = ({interactive,data}:{interactive:boolean,data:{name:string|un
   const [navdireaction, setnavdireaction] = useState<'right'|'left'>('right')
   const [navpath, setnavpath] = useState('')
   const globalcontext = useContext(GlobalContext)
+  const displayImage = data?.img ?? globalcontext?.localImage ?? globalcontext?.user?.img
   useEffect(()=>{
     const tutorial = sessionStorage.getItem("tutorial_finished");
     if (!tutorial) {
@@ -80,7 +81,7 @@ const Førerkort = ({interactive,data}:{interactive:boolean,data:{name:string|un
                 <div className="  w-fit h-fit absolute right-[2px] top-[10px]">
                   <JumpingLetter />
                 </div>
-                <img loading='eager' alt="..." src={data?data.img:globalcontext?.user?.img} className=" w-full object-cover" onClick={()=>{
+                <img loading='eager' alt="..." src={displayImage ?? undefined} className=" w-full object-cover" onClick={()=>{
                   if (interactive) {
                     setnavpath('/p')
                   }

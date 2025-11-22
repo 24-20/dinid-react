@@ -9,6 +9,7 @@ const Personalia = () => {
     const [navdireaction, setnavdireaction] = useState<'right'|'left'>('right')
     const [navpath, setnavpath] = useState('')
     const globalcontext = useContext(GlobalContext)
+    const displayImage = globalcontext?.localImage ?? globalcontext?.user?.img
     const navigate = useNavigate()
 
     
@@ -34,7 +35,7 @@ const Personalia = () => {
             <Navbar setnavdireaction={setnavdireaction} setnavpath={setnavpath}/>
             <div className=" hide-scrollbar h-[800px] w-screen overflow-y-scroll overflow-x-hidden flex flex-col items-center pt-[74px]  ">
                 <div className=" border-[#E8E8E8] border w-[94%] h-fit p-2.5 relative z-10 bg-white mt-8">
-                    <img loading='eager' alt="..." src={globalcontext?.user?.img} className=" w-full object-cover"/>
+                    <img loading='eager' alt="..." src={displayImage ?? undefined} className=" w-full object-cover"/>
                 </div>
                 
               <h1 className=" text-[24px] text-[#444f55] mt-2">{globalcontext?.user?.name.toUpperCase()}</h1>

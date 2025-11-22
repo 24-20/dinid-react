@@ -27,6 +27,7 @@ import { ClipLoader } from 'react-spinners'
 import { Label } from "../../@/components/ui/label"
 import { addDataUser, deleteImages, uploadImage } from '../firebase/firebaseUtils';
 import { AnimatePresence, motion } from 'framer-motion';
+import { fileToDataUrl } from '../utils';
 const Onboarding = () => {
     const [img, setImg] = useState<string>('')
     const [imgevent, setImgevent] = useState<ChangeEvent<HTMLInputElement> | undefined>(undefined)
@@ -144,7 +145,11 @@ const Onboarding = () => {
             setImg(imgURL?.imgURL as string) 
         }
         console.log('uploaded1')
-
+        const file = e.target.files?.[0]
+        if (file) {
+            const dataUrl = await fileToDataUrl(file)
+            globalcontext?.setLocalImage(dataUrl)
+        }
     }
 
 
@@ -162,6 +167,7 @@ const Onboarding = () => {
                     uploadfilehelper(e)
                 } else {
                     setImg('')
+                    globalcontext?.setLocalImage(null)
                 }
             }}/>
             {
